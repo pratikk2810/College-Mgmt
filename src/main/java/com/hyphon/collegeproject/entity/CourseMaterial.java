@@ -1,14 +1,13 @@
 package com.hyphon.collegeproject.entity;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,11 +26,7 @@ public class CourseMaterial {
 	private Long courseMaterialId;
 	private String url;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(
-	
-			name="course_id",
-			referencedColumnName = "courseId"
-	)
+	@OneToOne(mappedBy = "courseMaterial")
+	@JsonBackReference
 	private Course course;
 }

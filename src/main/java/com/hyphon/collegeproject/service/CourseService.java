@@ -12,4 +12,8 @@ public interface CourseService {
 
 	Course createCourse(Course course);
 
+	boolean updateCourse(Long courseId,Course course);
+
+	boolean deleteCourse(Long courseId);
+
 }

@@ -1,5 +1,6 @@
 package com.hyphon.collegeproject.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,8 +37,15 @@ public class Course {
 	private String courseName;
 	private Integer credits;
 	
+	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(
+			
+			name="course_material_id",
+			referencedColumnName = "courseMaterialId"
+	)
 	private CourseMaterial courseMaterial;
+	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(
@@ -41,14 +53,7 @@ public class Course {
 			name="teacher_id",
 			referencedColumnName = "teacherId"
 	)
+	@JsonBackReference
 	private Teacher teacher;
 	
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "student_course",
-			joinColumns = @JoinColumn(name="course_id", referencedColumnName = "courseId"),
-			inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "studentId")
-	)
-	private List<Student> studentList;
 }

@@ -1,11 +1,8 @@
 package com.hyphon.collegeproject.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.hyphon.collegeproject.entity.Student;
 import com.hyphon.collegeproject.repository.StudentRepository;
 
@@ -26,9 +23,30 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Optional<Student> getStudent(Long studentId) {
+	public Student getStudent(Long studentId) {
 		
-		return studentRepository.findById(studentId);
+		if(studentRepository.existsById(studentId)) {
+			return studentRepository.findById(studentId).get();
+		}
+		return null;
+	}
+
+	@Override
+	public boolean updateStudent(Long studentId, Student student) {
+		if(studentRepository.existsById(studentId)) {
+			studentRepository.save(student);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteStudent(Long studentId) {
+		if(studentRepository.existsById(studentId)) {
+			studentRepository.deleteById(studentId);
+			return true;
+		}
+		return false;
 	}
 
 }
