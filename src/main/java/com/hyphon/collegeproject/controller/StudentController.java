@@ -1,6 +1,9 @@
 package com.hyphon.collegeproject.controller;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,13 +41,13 @@ public class StudentController {
 	}
 	
 	@PostMapping("/students")
-	public Student createStudent(@RequestBody Student student) {
+	public Student createStudent(@Valid @RequestBody Student student) {
 		studentService.createStudent(student);
 		return student;
 	}
 	
 	@PutMapping("/students/{studentId}")
-	public String updateStudent(@PathVariable("studentId") Long studentId, @RequestBody Student student) {
+	public String updateStudent(@Valid @PathVariable("studentId") Long studentId, @RequestBody Student student) {
 		
 		String message = "Student is not available.";
 		if(studentService.updateStudent(studentId, student)) {

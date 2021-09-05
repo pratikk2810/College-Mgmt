@@ -1,6 +1,9 @@
 package com.hyphon.collegeproject.controller;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,16 +39,16 @@ public class CourseController {
 	}
 	
 	@PostMapping("/courses")
-	public Course createCourse(@RequestBody Course course) {
-		
+	public Course createCourse(@Valid @RequestBody Course course) {
 		Course Outcourse = courseService.createCourse(course);
 		return Outcourse;
 	}
 	
 	@PutMapping("/courses/{courseId}")
-	public String updateCourse(@PathVariable("courseId") Long courseId, @RequestBody Course course) {
+	public String updateCourse(@Valid @PathVariable("courseId") Long courseId, @RequestBody Course course) {
 		
 		String message = "Course is not available.";
+		course.setCourseId(courseId);
 		if(courseService.updateCourse(courseId, course)) {
 			message = "Course updated successfully.";
 		}

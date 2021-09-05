@@ -2,6 +2,8 @@ package com.hyphon.collegeproject.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +41,13 @@ public class TeacherController {
 	}
 	
 	@PostMapping("/teachers")
-	public Teacher createTeacher(@RequestBody Teacher teacher) {
+	public Teacher createTeacher(@Valid @RequestBody Teacher teacher) {
 		Teacher outTeacher = teacherService.createTeacher(teacher);
 		return outTeacher;
 	}
 	
 	@PutMapping("/teachers/{teacherId}")
-	public String updateTeacher(@PathVariable("teacherId") Long teacherId, @RequestBody Teacher teacher) {
+	public String updateTeacher(@Valid @PathVariable("teacherId") Long teacherId, @RequestBody Teacher teacher) {
 		
 		String message = "Teacher is not available.";
 		if(teacherService.updateTeacher(teacherId, teacher)) {
